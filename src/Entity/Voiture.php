@@ -28,6 +28,9 @@ class Voiture
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $distinction;
 
+    #[ORM\ManyToOne(targetEntity: user::class, inversedBy: 'voitures')]
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class Voiture
     public function setDistinction(?string $distinction): self
     {
         $this->distinction = $distinction;
+
+        return $this;
+    }
+
+    public function getUser(): ?user
+    {
+        return $this->user;
+    }
+
+    public function setUser(?user $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

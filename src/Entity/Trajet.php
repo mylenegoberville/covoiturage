@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TrajetRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TrajetRepository::class)]
@@ -30,6 +32,14 @@ class Trajet
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $escale;
+
+    #[ORM\ManyToMany(targetEntity: Transporter::class, mappedBy: 'idT')]
+    private $transporters;
+
+    public function __construct()
+    {
+        $this->transporters = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +114,33 @@ class Trajet
     public function setEscale(?string $escale): self
     {
         $this->escale = $escale;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Transporter>
+     */
+    public function getTransporters(): Collection
+    {
+        return $this->transporters;
+    }
+
+    public function addTransporter(Transporter $transporter): self
+    {
+        if (!$this->transporters->contains($transporter)) {
+            $this->transporters[] = $transporter;
+            $transporter->addIdT($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransporter(Transporter $transporter): self
+    {
+        if ($this->transporters->removeElement($transporter)) {
+            $transporter->removeIdT($this);
+        }
 
         return $this;
     }
