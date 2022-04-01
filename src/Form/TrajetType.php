@@ -11,14 +11,29 @@ class TrajetType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
+        if($options['ajouter']== true)
+        {
+            $builder
             ->add('depart')
             ->add('arrivee')
             ->add('date')
             ->add('heure')
             ->add('place')
             ->add('escale')
-        ;
+            ;
+        }
+        elseif($options['modifier']== true)
+        {
+            $builder
+            ->add('depart')
+            ->add('arrivee')
+            ->add('date')
+            ->add('heure')
+            ->add('place')
+            ->add('escale')
+            ;
+        }
+       
     }
 
     public function configureOptions(OptionsResolver $resolver): void

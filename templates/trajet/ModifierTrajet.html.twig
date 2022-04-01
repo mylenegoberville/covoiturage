@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TrajetController!{% endblock %}
+{% block title %}Modifier le trajet!{% endblock %}
 
 {% block body %}
 <style>
@@ -9,7 +9,21 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Modifier le trajet! ✅</h1>
+
+    {{ form_start(formmodiftrajet) }}
+        {{ form_row(formmodiftrajet.depart) }}
+        {{ form_row(formmodiftrajet.arrivee) }}
+        {{ form_row(formmodiftrajet.date) }}
+        {{ form_row(formmodiftrajet.heure) }}
+        {{ form_row(formmodiftrajet.place) }}
+        {{ form_row(formmodiftrajet.escale) }}
+
+
+        <button type="submit" class="btn">Enregister les modifications</button>
+    {{ form_end(formmodiftrajet) }}
+
+
 
     This friendly message is coming from:
     <ul>
