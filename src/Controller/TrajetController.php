@@ -16,7 +16,29 @@ class TrajetController extends AbstractController
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         $trajet = new Trajet();
-        $formTrajet = $this->createForm(TrajetType::class, $trajet);
+        $formTrajet = $this->createForm(TrajetType::class,$trajet, array('ajouter'=>true));
+
+        $formTrajet->handleRequest($request);
+        if ($formTrajet->isSubmitted() && $formTrajet->isValid()) {
+            // $form->getData() contient les valeurs soumises
+            $trajet = $formTrajet->getData();
+
+            //Nous allons dans cette exemple sauvgarder nos données 
+            $entityManager->persist($trajet);
+            $entityManager->flush();
+            $this->addFlash('success',"le trajet a bien été enregisté");
+            return $this->render('trajet/TrajetsByUser.html.twig');
+        }
+        return $this->render('trajet/addTrajet.html.twig', [
+            'formTrajet' => $formTrajet->createView(),
+        ]);
+    }
+
+    #[Route('/trajet', name: 'addtrajet')]
+    public function addTrajet(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $trajet = new Trajet();
+        $formTrajet = $this->createForm(TrajetType::class,$trajet, array('ajouter'=>true));
 
         $formTrajet->handleRequest($request);
         if ($formTrajet->isSubmitted() && $formTrajet->isValid()) {
@@ -35,7 +57,7 @@ class TrajetController extends AbstractController
     }
 
     #[Route('/ModificationTrajet', name: 'modifiTrajet')]
-    public function modifierchantier(Trajet $trajet ,Request $request, EntityManagerInterface $entityManager): Response
+    public function modifiertraj(Trajet $trajet ,Request $request, EntityManagerInterface $entityManager): Response
 
 
     {   
@@ -57,6 +79,14 @@ class TrajetController extends AbstractController
             'trajet'=>$trajet,
             'formmodiftrajet' => $formmodiftrajet->createView(), 
             //'admin'=>true,  
+        ]);
+    }
+
+    #[Route('/trajetuser', name: 'TrajetUser')]
+    public function TrajetByUser(): Response
+    {
+        return $this->render('trajet/TrajetsByUser.html.twig', [
+            'controller_name' => 'TrajetController',
         ]);
     }
 

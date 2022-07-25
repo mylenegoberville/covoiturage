@@ -9,7 +9,18 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<h1>Ajouter une Voiture! ✅</h1>
+
+    {{ form_start(formVoiture) }}
+        {{ form_row(formVoiture.marque) }}
+        {{ form_row(formVoiture.modele) }}
+        {{ form_row(formVoiture.couleur) }}
+        {{ form_row(formVoiture.immatriculation) }}
+        {{ form_row(formVoiture.distinction) }}
+
+
+        <button type="submit" class="btn">Ajouter</button>
+    {{ form_end(formVoiture) }}
 
     This friendly message is coming from:
     <ul>

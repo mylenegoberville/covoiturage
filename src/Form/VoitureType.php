@@ -11,19 +11,35 @@ class VoitureType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
+        if($options['ajouter']== true)
+        {
+            $builder
             ->add('marque')
             ->add('modele')
             ->add('couleur')
             ->add('immatriculation')
             ->add('distinction')
         ;
+        }
+        elseif($options['modifier']== true)
+        { 
+            $builder
+            ->add('marque')
+            ->add('modele')
+            ->add('couleur')
+            ->add('immatriculation')
+            ->add('distinction')
+        ;
+        }
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Voiture::class,
+            'ajouter'=>false,
+            'modifier'=>false
         ]);
     }
 }

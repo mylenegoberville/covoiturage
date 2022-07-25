@@ -18,17 +18,19 @@ class TrajetType extends AbstractType
             ->add('arrivee')
             ->add('date')
             ->add('heure')
+            ->add('voiture')
             ->add('place')
             ->add('escale')
             ;
         }
         elseif($options['modifier']== true)
-        {
+        { 
             $builder
             ->add('depart')
             ->add('arrivee')
             ->add('date')
             ->add('heure')
+            ->add('voiture')
             ->add('place')
             ->add('escale')
             ;
@@ -40,6 +42,8 @@ class TrajetType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trajet::class,
+            'ajouter'=>false,
+            'modifier'=>false
         ]);
     }
 }

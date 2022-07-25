@@ -16,6 +16,7 @@
         {{ form_row(formTrajet.arrivee) }}
         {{ form_row(formTrajet.date) }}
         {{ form_row(formTrajet.heure) }}
+        {{ form_row(formTrajet.voiture) }}
         {{ form_row(formTrajet.place) }}
         {{ form_row(formTrajet.escale) }}
 
@@ -23,12 +24,5 @@
         <button type="submit" class="btn">Ajouter</button>
     {{ form_end(formTrajet) }}
 
-
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xamppp/htdocs/covoiturage/src/Controller/TrajetController.php'|file_link(0) }}">src/Controller/TrajetController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xamppp/htdocs/covoiturage/templates/trajet/index.html.twig'|file_link(0) }}">templates/trajet/index.html.twig</a></code></li>
-    </ul>
 </div>
 {% endblock %}

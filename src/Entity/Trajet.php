@@ -36,9 +36,13 @@ class Trajet
     #[ORM\ManyToMany(targetEntity: Transporter::class, mappedBy: 'idT')]
     private $transporters;
 
+    #[ORM\OneToMany(mappedBy: 'trajet', targetEntity: Voiture::class)]
+    private $voiture;
+
     public function __construct()
     {
         $this->transporters = new ArrayCollection();
+        $this->voiture = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,6 +144,36 @@ class Trajet
     {
         if ($this->transporters->removeElement($transporter)) {
             $transporter->removeIdT($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, voiture>
+     */
+    public function getVoiture(): Collection
+    {
+        return $this->voiture;
+    }
+
+    public function addVoiture(voiture $voiture): self
+    {
+        if (!$this->voiture->contains($voiture)) {
+            $this->voiture[] = $voiture;
+            $voiture->setTrajet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVoiture(voiture $voiture): self
+    {
+        if ($this->voiture->removeElement($voiture)) {
+            // set the owning side to null (unless already changed)
+            if ($voiture->getTrajet() === $this) {
+                $voiture->setTrajet(null);
+            }
         }
 
         return $this;
