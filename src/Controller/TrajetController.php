@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Trajet;
 use App\Form\TrajetType;
 use App\Repository\TrajetRepository;
+use App\Utils\Payement;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,10 +28,21 @@ class TrajetController extends AbstractController
     {
         
         $trajets = $trajetRepository->findBy(
-            ['user' => $this-> getUser()]
+            ['createdBy' => $this->getUser()]
         );
         return $this->render('trajet/TrajetsByUser.html.twig', [
             'trajets' => $trajets,
+        ]);
+    }
+
+
+    #[Route('/AfficherTrajet/{id}', name: 'afficherTrajet')]
+    public function afficherTrajet(Trajet $trajet ): Response
+    {         
+        return $this->render('trajet/AffichageTrajet.html.twig', [
+          
+            "trajet"=> $trajet,
+            
         ]);
     }
 
@@ -42,14 +54,14 @@ class TrajetController extends AbstractController
 
         $formTrajet->handleRequest($request);
         if ($formTrajet->isSubmitted() && $formTrajet->isValid()) {
-            // $form->getData() contient les valeurs soumises
-            $trajet = $formTrajet->getData();
+            
 
             //Nous allons dans cette exemple sauvgarder nos données 
+            $trajet->setCreatedBy($this->getUser());
             $entityManager->persist($trajet);
             $entityManager->flush();
             $this->addFlash('success',"le trajet a bien été enregisté");
-            return $this->render('trajet/TrajetsByUser.html.twig');
+            return $this->redirectToRoute('trajetByUser');
         }
         return $this->render('trajet/addTrajet.html.twig', [
             'formTrajet' => $formTrajet->createView(),
@@ -71,7 +83,7 @@ class TrajetController extends AbstractController
                $entityManager->persist($trajet);
                $entityManager->flush();
                $this->addFlash('success',"le trajet a bien été modifié");
-               return $this->render('trajet/TrajetsByUser.html.twig');
+               return $this->redirectToRoute('trajetByUser');
 
             }
         
@@ -93,6 +105,14 @@ class TrajetController extends AbstractController
             return $this->redirectToRoute('app_trajet');
         }
 
+     }
+
+     #[Route('/reserver/trajet/{id}', name: 'reserverTrajet')]
+     public function reserverTrajet(Trajet $trajet, Payement $payementUtils)
+     {
+        $payementUtils->getAccount($this->getUser());
+        $payementUtils->createPayment($this->getUser(),$trajet);
+        return $this->redirectToRoute('app_payements'); 
      }
 
 }

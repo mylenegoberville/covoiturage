@@ -39,14 +39,14 @@ class VoitureController extends AbstractController
 
         $formVoiture->handleRequest($request);
         if ($formVoiture->isSubmitted() && $formVoiture->isValid()) {
-            // $form->getData() contient les valeurs soumises
-            $voiture = $formVoiture->getData();
+            
 
             //Nous allons dans cette exemple sauvgarder nos données 
+            $voiture->setCreatedBy($this->getUser());
             $entityManager->persist($voiture);
             $entityManager->flush();
             $this->addFlash('success',"le véhicule a bien été enregisté");
-            return $this->render('voiture/AffichageVoiture.html.twig');
+            return $this->redirectToRoute('app_voiture');
         }
         return $this->render('voiture/addVoiture.html.twig', [
             'formVoiture' => $formVoiture->createView(),

@@ -28,6 +28,7 @@ class TrajetType extends AbstractType
             ))
             ->add('place')
             ->add('escale')
+            ->add('prix')
             ;
         }
         elseif($options['modifier']== true)
@@ -45,6 +46,7 @@ class TrajetType extends AbstractType
             ))
             ->add('place')
             ->add('escale')
+            ->add('prix')
             ;
         }
        

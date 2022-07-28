@@ -13,7 +13,10 @@
 <div class="container  row no-gutters ">
         {% for trajet in trajets %}
     <div class="card" style="width: 18rem;">
-    <img style="width:100px; height:80px"src="{{asset('assets/img/voiture.svg')}}">
+    <a href="{{path('afficherTrajet' ,{'id': trajet.id})}}"><img style="width:100px; height:80px"
+                        src="{{asset('assets/img/voiture.svg') }}">
+                        
+                    </a>
     <div class="card-body">
             <div> Départ : {{trajet.depart}}</div>
              {% if trajet.escale %}
@@ -23,7 +26,7 @@
             <div> Date : {{trajet.date|date('d/m/Y')}}</div>
             <div> Heure : {{trajet.date|date('h:i')}}</div>
             <div> Place : {{trajet.place}}</div>
-             <div> prix : {{trajet.prix}}</div>
+             <div> prix : {{trajet.prix}} €</div>
         <a href="{{path('modifiTrajet',{'id': trajet.id})}}" class="col btn btn-secondary btn-sm ">Modifier</a>
 
         <form method="post" class="col" action="{{path('suppvoiture',{'id': trajet.id})}}"

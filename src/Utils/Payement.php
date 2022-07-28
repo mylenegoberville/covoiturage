@@ -2,6 +2,8 @@
 
 namespace App\Utils;
 
+use App\Entity\Payement as EntityPayement;
+use App\Entity\Trajet;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Id;
@@ -37,6 +39,27 @@ class Payement {
             $user->getStripekey()
         );
         return $customer;
+    }
+
+    public function createPayment(User $user, Trajet $trajet){
+        $stripe = new StripeClient($this->stripeApiSecret);
+        $stripePayement = $stripe->paymentIntents->create([
+            'customer' => $user->getStripekey(),
+            'amount' => $trajet->getPrix()*100,
+            'currency' => 'eur',
+            'payment_method_types' => ['card'],
+        ]);
+        $payement = new EntityPayement();
+        $payement->setStripeId($stripePayement['id'])->setUser($user);
+        $this->entityManager->persist($payement);
+        $this->entityManager->flush();
+        return $payement;
+    }
+
+    public function retrievePayment(EntityPayement $payement){
+        $stripe = new StripeClient($this->stripeApiSecret);
+        return $stripe->paymentIntents->retrieve($payement->getStripeId());
+        
     }
 
 }

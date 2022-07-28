@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Vos transactions{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+{% include "user/index.html.twig" %}
+
+
+<div class="container  row no-gutters ">
+        {% for payement in payements %}
+    <div class="card" style="width: 18rem;">
+    <img style="width:100px; height:80px"src="{{asset('assets/img/voiture.svg')}}">
+    <div class="card-body">
+            <div> Date : {{payement['created']|date('d/m/Y h:i:s')}}</div>
+            <div> Montant : {{payement['amount']/100 ~ '€'}}</div>
+
+    </div>
+    </div>
+
+    {% endfor %}
+    </div>
+    </div>
+{% endblock %}

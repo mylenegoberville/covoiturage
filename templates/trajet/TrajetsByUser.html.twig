@@ -24,7 +24,7 @@
             <div> Date : {{trajet.date|date('d/m/Y')}}</div>
             <div> Heure : {{trajet.date|date('h:i')}}</div>
             <div> Place : {{trajet.place}}</div>
-             <div> prix : {{trajet.prix}}</div>
+             <div> prix : {{trajet.prix}} €</div>
         <a href="{{path('modifiTrajet',{'id': trajet.id})}}" class="col btn btn-secondary btn-sm ">Modifier</a>
 
         <form method="post" class="col" action="{{path('suppvoiture',{'id': trajet.id})}}"

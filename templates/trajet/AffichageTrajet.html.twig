@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Trajet{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+
+<div class="example-wrapper">
+<table class="table">
+<td>
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+             <div> Départ : {{trajet.depart}}</div>
+             {% if trajet.escale %}
+                <div> escale : {{trajet.escale}}</div>
+            {% endif %}
+            <div> Arrivée : {{trajet.arrivee}}</div>
+            <div> Date : {{trajet.date|date('d/m/Y')}}</div>
+            <div> Heure : {{trajet.date|date('h:i')}}</div>
+            <div> Place : {{trajet.place}}</div>
+             <div> prix : {{trajet.prix}} €</div>
+</div>
+</td>
+<td>
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+          <a href="{{path('reserverTrajet' ,{'id': trajet.id})}}" class="btn">Reserver</a>   
+</div>
+</td>
+</table>
+   
+</div>
+
+</div>
+{% endblock %}

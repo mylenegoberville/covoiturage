@@ -9,10 +9,16 @@ use App\Utils\Payement;
 
 class PayementController extends AbstractController
 {
-    #[Route(path: '/payement', name: 'app_payement')]
-    public function payement(Payement $payement): Response
+    #[Route(path: '/payement', name: 'app_payements')]
+    public function payement(Payement $payementUtils): Response
     {
-        $payement->createAccount($this->getUser());
+        $payements=[];
+        foreach ($this->getUser()->getPayements() as $userPayement)
+        {
+            $payements[]=$payementUtils->retrievePayment($userPayement);
+            
+        }
+        return $this->render('user/transactions.html.twig',['payements'=>$payements]);
         
     }
 

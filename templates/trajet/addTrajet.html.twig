@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% form_theme formTrajet 'bootstrap_4_layout.html.twig' %}
 
 {% block title %}Ajouter un trajet!{% endblock %}
 
@@ -9,7 +10,7 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Ajouter un trajet! ✅</h1>
+    <h1>Ajouter un trajet!</h1>
 
     {{ form_start(formTrajet) }}
        {{ form_widget(formTrajet) }}

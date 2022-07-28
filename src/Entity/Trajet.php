@@ -36,8 +36,8 @@ class Trajet
     #[ORM\Column(type: 'integer')]
     private $prix;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'trajets')]
-    private $user;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private $createdBy;
 
     #[ORM\ManyToOne(targetEntity: Voiture::class, inversedBy: 'trajets')]
     private $voiture;
@@ -153,14 +153,14 @@ class Trajet
         return $this;
     }
 
-    public function getUser(): ?user
+    public function getCreatedBy(): ?User
     {
-        return $this->user;
+        return $this->createdBy;
     }
 
-    public function setUser(?user $user): self
+    public function setCreatedBy(?User $user): self
     {
-        $this->user = $user;
+        $this->createdBy = $user;
 
         return $this;
     }

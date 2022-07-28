@@ -30,8 +30,9 @@ class Voiture
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $distinction;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'voitures')]
-    private $user;
+  
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private $createdBy;
 
     #[ORM\ManyToOne(targetEntity: Trajet::class, inversedBy: 'voiture')]
     private $trajet;
@@ -112,14 +113,14 @@ class Voiture
         return $this;
     }
 
-    public function getUser(): ?user
+    public function getCreatedBy()
     {
-        return $this->user;
+        return $this->createdBy;
     }
 
-    public function setUser(?user $user): self
+    public function setCreatedBy(?User $user): self
     {
-        $this->user = $user;
+        $this->createdBy = $user;
 
         return $this;
     }
