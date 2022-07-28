@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}liste des utilisateurs!{% endblock %}
+{% block montitre %}Listes des utilisateurs{% endblock %}
+{% block body %}
+
+
+
+ <div class="container">
+<table class="table table-sm">
+    <thead>
+        <th>Nom</th>
+        <th>Prènom</th>
+        <th>Email</th>
+        <th>Rôles</th>
+        <th>Modifier</th>
+        <th></th>
+    </thead>
+    <tbody>
+        {# On boucle sur les utilisateurs #}
+        {% for user in users %}
+            <tr>
+                <td><a class=" alistuser" href="{{path('affichageUser' ,{'id': user.id})}}">{{user.nom}}</a></td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                 
+                    {% for role in user.roles %}
+                        {% if role != "ROLE_ADMIN" %}
+                            Utilisateur
+                        {% elseif role == "ROLE_ADMIN"%}
+                            Administrateur
+                        {% endif %}
+                    {% endfor %} </div>
+       
+                    
+                </td>
+                <td><a href="{{path('modifiUser',{'id': user.id})}}"><img style="width:30px; height:30px"src="{{asset('assets/img/crayon.png')}}"></a></td>
+                <td><form method="post" class="col" action="{{path('suppUSer',{'id':user.id})}}" onsubmit=" return confirm('Voulez-vous vraiment supprimer?')";>
+                    <input type="hidden" name="_method" value='SUP'>
+                    <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ user.id)}}">
+                    <input type="submit" class="btn btn-danger " value="Supprimer">
+                </form></td>
+            </tr>
+        {% endfor %}
+            
+    </tbody>
+</table>
+</div>
+{% endblock %}

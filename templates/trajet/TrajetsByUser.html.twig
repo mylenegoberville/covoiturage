@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}Utilisateur{% endblock %}
+{% block title %}Trajet{% endblock %}
 
 {% block body %}
 <style>
@@ -9,16 +9,34 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 {% include "user/index.html.twig" %}
-<div class="example-wrapper">
+<a class="nav-link" role="button" href="{{ path('addtrajet') }}">Ajouter un trajet</a>
 
+<div class="container  row no-gutters ">
+        {% for trajet in trajets %}
+    <div class="card" style="width: 18rem;">
+    <img style="width:100px; height:80px"src="{{asset('assets/img/voiture.svg')}}">
+    <div class="card-body">
+            <div> Départ : {{trajet.depart}}</div>
+             {% if trajet.escale %}
+                <div> escale : {{trajet.escale}}</div>
+            {% endif %}
+            <div> Arrivée : {{trajet.arrivee}}</div>
+            <div> Date : {{trajet.date|date('d/m/Y')}}</div>
+            <div> Heure : {{trajet.date|date('h:i')}}</div>
+            <div> Place : {{trajet.place}}</div>
+             <div> prix : {{trajet.prix}}</div>
+        <a href="{{path('modifiTrajet',{'id': trajet.id})}}" class="col btn btn-secondary btn-sm ">Modifier</a>
 
+        <form method="post" class="col" action="{{path('suppvoiture',{'id': trajet.id})}}"
+            onsubmit=" return confirm('Voulez-vous vraiment supprimer?')" ;>
+            <input type="hidden" name="_method" value='SUP'>
+            <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ trajet.id)}}">
+            <input type="submit" class="btn btn-danger btn-sm " value="Supprimer">
+        </form>
+    </div>
+    </div>
 
-    <h1>Hello {{ app.user.nom }}! ✅</h1>
-
-    This friendly message is coming from: trajet
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xamppp/htdocs/covoiturage/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xamppp/htdocs/covoiturage/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-</div>
+    {% endfor %}
+    </div>
+    </div>
 {% endblock %}

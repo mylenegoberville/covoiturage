@@ -14,6 +14,7 @@ class VoitureType extends AbstractType
         if($options['ajouter']== true)
         {
             $builder
+            ->add('nom')
             ->add('marque')
             ->add('modele')
             ->add('couleur')
@@ -24,6 +25,7 @@ class VoitureType extends AbstractType
         elseif($options['modifier']== true)
         { 
             $builder
+            ->add('nom')
             ->add('marque')
             ->add('modele')
             ->add('couleur')

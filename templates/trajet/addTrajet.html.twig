@@ -12,13 +12,7 @@
     <h1>Ajouter un trajet! ✅</h1>
 
     {{ form_start(formTrajet) }}
-        {{ form_row(formTrajet.depart) }}
-        {{ form_row(formTrajet.arrivee) }}
-        {{ form_row(formTrajet.date) }}
-        {{ form_row(formTrajet.heure) }}
-        {{ form_row(formTrajet.voiture) }}
-        {{ form_row(formTrajet.place) }}
-        {{ form_row(formTrajet.escale) }}
+       {{ form_widget(formTrajet) }}
 
 
         <button type="submit" class="btn">Ajouter</button>

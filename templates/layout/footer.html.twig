@@ -49,6 +49,10 @@
         visibility: hidden;
         transition: .22s ease;
     }
+     .hauteur{
+       
+        padding-top: 2%;
+    }
     
     
     </style>
@@ -56,7 +60,7 @@
 
 
     <br><br><br><br>
-<footer class="section footer-classic context-dark bg-image" style="background: #2d3246;">
+<footer class="section footer-classic hauteur context-dark bg-image" style="background: #2d3246;">
         <div class="container">
           <div class="row row-30">
             <div class="col-md-4 col-xl-5">
@@ -81,10 +85,10 @@
             <div class="col-md-4 col-xl-3">
               <h5>Menu</h5>
               <ul class="nav-list">
-                <li><a href="#">Accueil</a></li>
-                <li><a href="#">Ajout trajet</a></li>
-                <li><a href="#">reserver trajet</a></li>
-                <li><a href="#">Mon compte</a></li>
+                <li><a href="{{ path('app_trajet') }}">Accueil</a></li>
+                <li><a href="{{ path('addtrajet')}}">Ajout trajet</a></li>
+                <li><a href="{{ path('addvoiture')}}">Ajout voiture</a></li>
+                <li><a href="{{ path('app_user')}}">Mon compte</a></li>
               </ul>
             </div>
           </div>

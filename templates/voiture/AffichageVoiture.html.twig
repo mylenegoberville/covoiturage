@@ -9,55 +9,34 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 {% include "user/index.html.twig" %}
-<div class="example-wrapper">
+
 
 
 <a class="nav-link" role="button" href="{{ path('addvoiture') }}">Ajouter une voiture</a>
 
 <div class="container  row no-gutters ">
-    {% for voiture in voitures %}
-     <div class=" col-12  col-md-4 col-sm-6 col-lg-3 p-1" >
-        <div class="card mb-3">
-            <div class="row no-gutters align-items-center p-2">
-                <div class="col col-md-3 col-sm-6">
-                    <a href="{{path('afficher_chantier' ,{'id': voiture.id})}}"
-                            class="col btn btn-secondary btn-sm " style="margin-left: 25%">Voir&nbsp;voiture</a></div>
-                <div class="row m-2 ">
+        {% for voiture in voitures %}
+    <div class="card" style="width: 18rem;">
+    <img style="width:100px; height:80px"src="{{asset('assets/img/voiture.svg')}}">
+    <div class="card-body">
+            <div> Marque : {{voiture.nom}}</div>
+            <div> Marque : {{voiture.marque}}</div>
+            <div> Modèle : {{voiture.modele}}</div>
+            <div> couleur : {{voiture.couleur}}</div>
+            <div> immatriculation : {{voiture.immatriculation}}</div>
+            <div> distinction : {{voiture.distinction}}</div>
+        <a href="{{path('modifvoiture',{'id': voiture.id})}}" class="col btn btn-secondary btn-sm ">Modifier</a>
 
-                </div>
-            </div>
-			 
-            
-            <div class="row container mb-1 ">
-                <div class="col col-md-3 col-sm-6">
-                    <a href="{{path('modifiervoiture',{'id': voiture.id})}}"
-                        class="col btn btn-secondary btn-sm ">Modifier</a>
-                </div>
-                {% if admin %}
-				 &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-                <div class="col col-md-3 col-sm-6">
-                    <form method="post" class="col" action="{{path('supprimerchantier',{'id':voiture.id})}}"
-                        onsubmit=" return confirm('Voulez-vous vraiment supprimer?')" ;>
-                        <input type="hidden" name="_method" value='SUP'>
-                        <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ chantier.id)}}">
-                        <input type="submit" class="btn btn-danger btn-sm " value="Supprimer">
-                    </form>
-                </div>
-            </div>
-            
-            {% endif %}
-
-			
-        </div>
+        <form method="post" class="col" action="{{path('suppvoiture',{'id': voiture.id})}}"
+            onsubmit=" return confirm('Voulez-vous vraiment supprimer?')" ;>
+            <input type="hidden" name="_method" value='SUP'>
+            <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ voiture.id)}}">
+            <input type="submit" class="btn btn-danger btn-sm " value="Supprimer">
+        </form>
     </div>
-    {% endfor %}
-</div>
-    <h1>Hello {{ app.user.nom }}! ✅</h1>
+    </div>
 
-    This friendly message is coming from: Voiture
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xamppp/htdocs/covoiturage/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xamppp/htdocs/covoiturage/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-</div>
+    {% endfor %}
+    </div>
+    </div>
 {% endblock %}

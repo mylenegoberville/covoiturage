@@ -21,11 +21,8 @@ class Trajet
     #[ORM\Column(type: 'string', length: 255)]
     private $arrivee;
 
-    #[ORM\Column(type: 'date')]
+    #[ORM\Column(type: 'datetime')]
     private $date;
-
-    #[ORM\Column(type: 'time')]
-    private $heure;
 
     #[ORM\Column(type: 'integer')]
     private $place;
@@ -36,13 +33,18 @@ class Trajet
     #[ORM\ManyToMany(targetEntity: Transporter::class, mappedBy: 'idT')]
     private $transporters;
 
-    #[ORM\OneToMany(mappedBy: 'trajet', targetEntity: Voiture::class)]
+    #[ORM\Column(type: 'integer')]
+    private $prix;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'trajets')]
+    private $user;
+
+    #[ORM\ManyToOne(targetEntity: Voiture::class, inversedBy: 'trajets')]
     private $voiture;
 
     public function __construct()
     {
         $this->transporters = new ArrayCollection();
-        $this->voiture = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -86,17 +88,6 @@ class Trajet
         return $this;
     }
 
-    public function getHeure(): ?\DateTimeInterface
-    {
-        return $this->heure;
-    }
-
-    public function setHeure(\DateTimeInterface $heure): self
-    {
-        $this->heure = $heure;
-
-        return $this;
-    }
 
     public function getPlace(): ?int
     {
@@ -149,32 +140,39 @@ class Trajet
         return $this;
     }
 
-    /**
-     * @return Collection<int, voiture>
-     */
-    public function getVoiture(): Collection
+
+    public function getPrix(): ?int
     {
-        return $this->voiture;
+        return $this->prix;
     }
 
-    public function addVoiture(voiture $voiture): self
+    public function setPrix(int $prix): self
     {
-        if (!$this->voiture->contains($voiture)) {
-            $this->voiture[] = $voiture;
-            $voiture->setTrajet($this);
-        }
+        $this->prix = $prix;
 
         return $this;
     }
 
-    public function removeVoiture(voiture $voiture): self
+    public function getUser(): ?user
     {
-        if ($this->voiture->removeElement($voiture)) {
-            // set the owning side to null (unless already changed)
-            if ($voiture->getTrajet() === $this) {
-                $voiture->setTrajet(null);
-            }
-        }
+        return $this->user;
+    }
+
+    public function setUser(?user $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getVoiture(): ?voiture
+    {
+        return $this->voiture;
+    }
+
+    public function setVoiture(?voiture $voiture): self
+    {
+        $this->voiture = $voiture;
 
         return $this;
     }

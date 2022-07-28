@@ -53,10 +53,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Transporter::class, mappedBy: 'IdU')]
     private $transporters;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $stripekey;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Trajet::class)]
+    private $trajets;
+
     public function __construct()
     {
         $this->voitures = new ArrayCollection();
         $this->transporters = new ArrayCollection();
+        $this->trajets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -255,6 +262,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->transporters->removeElement($transporter)) {
             $transporter->removeIdU($this);
+        }
+
+        return $this;
+    }
+
+    public function getStripekey(): ?string
+    {
+        return $this->stripekey;
+    }
+
+    public function setStripekey(?string $stripekey): self
+    {
+        $this->stripekey = $stripekey;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Trajet>
+     */
+    public function getTrajets(): Collection
+    {
+        return $this->trajets;
+    }
+
+    public function addTrajet(Trajet $trajet): self
+    {
+        if (!$this->trajets->contains($trajet)) {
+            $this->trajets[] = $trajet;
+            $trajet->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrajet(Trajet $trajet): self
+    {
+        if ($this->trajets->removeElement($trajet)) {
+            // set the owning side to null (unless already changed)
+            if ($trajet->getUser() === $this) {
+                $trajet->setUser(null);
+            }
         }
 
         return $this;

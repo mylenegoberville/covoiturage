@@ -12,12 +12,7 @@
     <h1>Modifier le trajet! ✅</h1>
 
     {{ form_start(formmodiftrajet) }}
-        {{ form_row(formmodiftrajet.depart) }}
-        {{ form_row(formmodiftrajet.arrivee) }}
-        {{ form_row(formmodiftrajet.date) }}
-        {{ form_row(formmodiftrajet.heure) }}
-        {{ form_row(formmodiftrajet.place) }}
-        {{ form_row(formmodiftrajet.escale) }}
+       {{ form_widget(formmodiftrajet) }}
 
 
         <button type="submit" class="btn">Enregister les modifications</button>

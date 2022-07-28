@@ -17,7 +17,9 @@ class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
+        if($options['ajouterAdmin']== true)
+        {
+            $builder
             ->add('email')
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
@@ -52,12 +54,45 @@ class RegistrationFormType extends AbstractType
             ->add('ville')
 
         ;
+        }
+        elseif($options['ajouter']== true)
+        {
+            $builder
+            ->add('email')
+            ->add('plainPassword', PasswordType::class, [
+                // instead of being set onto the object directly,
+                // this is read and encoded in the controller
+                'mapped' => false,
+                'attr' => ['autocomplete' => 'new-password'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter a password',
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
+                    ]),
+                ],
+            ])
+            ->add('nom')
+            ->add('prenom')
+            ->add('telephone')
+            ->add('codePostal')
+            ->add('ville')
+
+        ;
+        }
+       
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'ajouterAdmin'=>false,
+            'ajouter'=>false
         ]);
     }
 }

@@ -10,15 +10,18 @@
     }
    </style>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<img style="width:100px; height:50px" src="{{asset('assets/img/Logo_carpooling.png')}}">
     <a class="navbar-brand" href="#">Carpooling</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobileMenu" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mobileMenu">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+        {% if not is_granted('ROLE_ADMIN') %}
             <li class="nav-item active">
                 <a class="nav-link" href="{{ path('app_trajet') }}">Accueil</a>
             </li>
+             {% endif %}
             {% if not app.user %}
             <li class="nav-item active">
                 <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
@@ -28,13 +31,15 @@
             </li>
         {% else %}
         {% if is_granted('ROLE_ADMIN') %}
-        <li class="nav-item active"><a class="nav-link" href="{{ path('app_user')}}">
-            Trajet</a></li>
-        <li class="nav-item active"><a class="nav-link" href="{{ path('app_user')}}">
-            User</a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{ path('listuser')}}">
+            Liste Utilisateur</a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{ path('registeradmin')}}">
+            Création Admin</a></li>
          {% endif %}
+         {% if not is_granted('ROLE_ADMIN') %}
         <li class="nav-item active"><a class="nav-link" href="{{ path('app_user')}}">
             Compte</a></li>
+            {% endif %}
         <li class="nav-item active"><a class="nav-link" href="{{ path('app_logout')}}">
             Déconnection</a></li>
         {% endif %}

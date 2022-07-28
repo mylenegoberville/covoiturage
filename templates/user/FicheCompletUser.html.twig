@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+{% block title %}Utilisateur{% endblock %}
+{% block montitre %}{{user.nom}}{% endblock %}
+{% block body %}
+
+
+    <style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+   </style>
+
+
+
+  <div class="example-wrapper">
+        <div> Nom : {{user.nom}}</div>
+        <div> Prènom : {{user.prenom}}</div>
+        <div> Email : {{user.email}}</div>
+
+<ul class="nav justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{{ path('app_user' ,{'id': user.id}) }}">Trajets</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{path('voitureByUser' ,{'id': user.id})}}">Voitures</a>
+    </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{path('voitureByUser' ,{'id': user.id})}}">Transactions</a>
+    </li>
+</ul>
+
+
+  </div>  
+
+ 
+
+{% endblock %}

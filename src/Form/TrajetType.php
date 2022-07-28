@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Trajet;
+use App\Entity\Voiture;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,8 +19,13 @@ class TrajetType extends AbstractType
             ->add('depart')
             ->add('arrivee')
             ->add('date')
-            ->add('heure')
-            ->add('voiture')
+            ->add('voiture',EntityType::class,array( 
+                'class' => Voiture::class, 
+                  'choice_label'=>'nom', 
+                'label' =>'choisir une voiture', 
+                'multiple' => false, 
+                'required' => true
+            ))
             ->add('place')
             ->add('escale')
             ;
@@ -29,8 +36,13 @@ class TrajetType extends AbstractType
             ->add('depart')
             ->add('arrivee')
             ->add('date')
-            ->add('heure')
-            ->add('voiture')
+            ->add('voiture',EntityType::class,array( 
+                'class' => Voiture::class, 
+                  'choice_label'=>'nom', 
+                'label' =>'choisir une voiture', 
+                'multiple' => false, 
+                'required' => true
+            ))
             ->add('place')
             ->add('escale')
             ;
