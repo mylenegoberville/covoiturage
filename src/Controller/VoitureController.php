@@ -22,12 +22,15 @@ class VoitureController extends AbstractController
         ]);
     }
 
-    #[Route('/voitureByUser/{id}', name: 'voitureByUser')]
-    public function VoitureByUSer(Voiture $voiture, VoitureRepository $VoitureRepository, Request $request): Response
+    #[Route('/voitureByUser', name: 'voitureByUser')]
+    public function VoitureByUSer(VoitureRepository $VoitureRepository,  Request $request): Response
     {
-        $voituresusers = $voiture;
+        
+        $voitures = $VoitureRepository->findBy(
+            ['createdBy' => $this->getUser()]
+        );
         return $this->render('user/FicheCompletUserVoiture.html.twig', [
-            'voituresusers' => $voituresusers,
+            'voitures' => $voitures,
         ]);
     }
 

@@ -34,11 +34,7 @@ class Voiture
     #[ORM\ManyToOne(targetEntity: User::class)]
     private $createdBy;
 
-    #[ORM\ManyToOne(targetEntity: Trajet::class, inversedBy: 'voiture')]
-    private $trajet;
-
-    #[ORM\OneToMany(mappedBy: 'voiture', targetEntity: Trajet::class)]
-    private $trajets;
+    
 
     #[ORM\Column(type: 'string', length: 255)]
     private $nom;
@@ -125,47 +121,9 @@ class Voiture
         return $this;
     }
 
-    public function getTrajet(): ?Trajet
-    {
-        return $this->trajet;
-    }
+   
 
-    public function setTrajet(?Trajet $trajet): self
-    {
-        $this->trajet = $trajet;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Trajet>
-     */
-    public function getTrajets(): Collection
-    {
-        return $this->trajets;
-    }
-
-    public function addTrajet(Trajet $trajet): self
-    {
-        if (!$this->trajets->contains($trajet)) {
-            $this->trajets[] = $trajet;
-            $trajet->setVoiture($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTrajet(Trajet $trajet): self
-    {
-        if ($this->trajets->removeElement($trajet)) {
-            // set the owning side to null (unless already changed)
-            if ($trajet->getVoiture() === $this) {
-                $trajet->setVoiture(null);
-            }
-        }
-
-        return $this;
-    }
+    
 
     public function getNom(): ?string
     {

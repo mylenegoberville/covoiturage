@@ -11,8 +11,7 @@
 
 
 <div class="example-wrapper">
-<table class="table">
-<td>
+
 <div class="card" style="width: 18rem;">
     <div class="card-body">
              <div> Départ : {{trajet.depart}}</div>
@@ -24,15 +23,9 @@
             <div> Heure : {{trajet.date|date('h:i')}}</div>
             <div> Place : {{trajet.place}}</div>
              <div> prix : {{trajet.prix}} €</div>
+             <a href="{{path('reserverTrajet' ,{'id': trajet.id})}}" class="btn">Reserver</a>  
 </div>
-</td>
-<td>
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-          <a href="{{path('reserverTrajet' ,{'id': trajet.id})}}" class="btn">Reserver</a>   
-</div>
-</td>
-</table>
+
    
 </div>
 
